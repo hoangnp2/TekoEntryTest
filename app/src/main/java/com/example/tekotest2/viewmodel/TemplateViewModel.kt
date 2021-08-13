@@ -1,4 +1,4 @@
-package com.example.tekotest2.screens.templatescreen
+package com.example.tekotest2.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,9 +9,14 @@ import com.example.tekotest2.utils.NetworkHelper
 import com.example.tekotest2.utils.Resource
 import kotlinx.coroutines.launch
 
-public class TemplateViewModel(private var repository : TekoRepository, private  var networkHelper: NetworkHelper) : ViewModel() {
+class TemplateViewModel(private var repository : TekoRepository, private  var networkHelper: NetworkHelper) : ViewModel() {
 
     val usersLiveData  = MutableLiveData<Resource<List<User>>>()
+    fun initData(){
+        fetchUsers()
+    }
+
+
     private fun fetchUsers() {
         viewModelScope.launch {
             usersLiveData.postValue(Resource.loading(null))
