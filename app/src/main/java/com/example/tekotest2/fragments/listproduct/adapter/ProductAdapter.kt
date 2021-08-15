@@ -158,6 +158,10 @@ class ProductAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
             bindError(product)
 
         }
+
+        /*
+        * Cập nhật màu sắc
+        * */
         fun bindDataColor(product :Product){
             binding.root.context.resources.getString(R.string.no_color).let {
                 binding.colorTV.text = it
@@ -166,9 +170,6 @@ class ProductAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
             if(ColorUtils.arrayListColor.isNotEmpty()){
                 product.color?.let {
                     if(ColorUtils.contain(it)){
-                        if(it == 1 || it == 5){
-                            Log.e("ABC","CBD")
-                        }
                         ColorUtils.getColor(it)?.name?.let { nameColor ->
                             binding.colorTV.text = nameColor
                             binding.savedColorTV.text = nameColor
@@ -178,6 +179,9 @@ class ProductAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
             }
         }
 
+        /*
+        * Hiển thị lỗi
+        * */
         fun bindError(product :Product){
             if(product.validateProduct() != Product.STATUS.INVALID ){
                 if (!product.isEditing) {
@@ -198,7 +202,9 @@ class ProductAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
                 binding.showWarningActionLL.visibility = View.GONE
             }
         }
-
+        /*
+         * Cập nhật trạng thái sản phẩm sửa/lưu
+         * */
         private fun updateStatusEditProduct(product : Product, binding : ItemProductLayoutBinding){
             if(product.isEditing){
                 binding.productNameEdt.isEnabled = true

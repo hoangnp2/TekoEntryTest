@@ -3,6 +3,9 @@ package com.example.tekotest2.utils
 import com.example.tekotest2.model.Color
 
 class ColorUtils {
+    /*
+    * Lưu giữ liệu về màu sắc sản phẩm
+    * */
     companion object {
         val arrayListColor: ArrayList<Color> = ArrayList()
         fun contain(id : Int) : Boolean{

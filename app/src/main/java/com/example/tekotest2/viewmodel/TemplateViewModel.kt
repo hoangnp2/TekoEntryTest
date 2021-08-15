@@ -28,6 +28,9 @@ class TemplateViewModel(
         getProduct(1)
     }
 
+    /*
+    * Lấy danh sách sản phẩm
+    * */
     private fun requestDataProduct() {
         viewModelScope.launch {
             requestDataProductLiveData.postValue(Resource.loading(null))
@@ -77,6 +80,9 @@ class TemplateViewModel(
         }
     }
 
+    /*
+    * Lấy data màu
+    * */
     private fun getColorsData() {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
@@ -111,6 +117,9 @@ class TemplateViewModel(
         }
     }
 
+    /*
+    * Lưu gía trị ban đầu của sản phẩm
+    * */
     fun cacheProduct(product: Product){
         if(!product.isChangeData){
             product.id?.let {
@@ -119,6 +128,9 @@ class TemplateViewModel(
         }
     }
 
+    /*
+     * Xoá sản phẩm đã lưu khi đã thay đổi, danh sách cache không lưu sản phẩm đã thay đổi
+     * */
     fun removeCacheProduct(id : String){
         cacheInitialProductData.remove(id)
     }
