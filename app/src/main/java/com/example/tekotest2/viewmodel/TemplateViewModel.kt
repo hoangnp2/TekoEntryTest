@@ -3,6 +3,7 @@ package com.example.tekotest2.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tekotest2.model.Color
 import com.example.tekotest2.model.Product
 import com.example.tekotest2.service.repository.ProductRepositoryImpl
 import com.example.tekotest2.utils.ColorUtils
@@ -18,7 +19,7 @@ class TemplateViewModel(
     val requestDataProductLiveData = MutableLiveData<Resource<List<Product>>>()
     val getMoreProductLiveData = MutableLiveData<Resource<List<Product>>>()
     val colorLiveData = MutableLiveData<Resource<Any>>() 
-    private val listProductData: ArrayList<Product> = ArrayList()
+    val listProductData: ArrayList<Product> = ArrayList()
     val cacheInitialProductData : HashMap<String,Product> = HashMap()
     var enableGetMore = true
     var isAddingProduct = false
@@ -87,11 +88,21 @@ class TemplateViewModel(
                                     colorDTOItem
                                 )
                             }) {
-                                color.id?.let { idColor ->
-                                    ColorUtils.listColor.put(idColor.toString(), color)
+                                color.id?.let {
+                                    ColorUtils.arrayListColor.add(color)
                                 }
-                                ColorUtils.arrayListColor.add(color)
                             }
+                            ColorUtils.arrayListColor.sortWith(object : Comparator<Color>{
+                                override fun compare(color0: Color?, color1: Color?): Int {
+                                    color0?.id?.let {id0->
+                                        color1?.id?.let {id1->
+                                            return id0 - id1
+                                        }
+                                    }
+                                    return 0
+                                }
+                            })
+
                         }
                         colorLiveData.postValue(Resource.success(null))
                     }

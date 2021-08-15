@@ -18,9 +18,8 @@
 
             <ImageView
                 android:id="@+id/imageProductIV"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/avatar"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
                 android:layout_gravity="center"/>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,7 +38,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         style="@style/EditTextViewBase"
-                        android:lines="1"
+                        android:singleLine="true"
                         android:ellipsize="end"
                         android:imeOptions="actionDone"
                         android:inputType="textImeMultiLine"
@@ -65,7 +64,8 @@
                         android:lines="1"
                         android:ellipsize="end"
                         android:imeOptions="actionDone"
-                        android:inputType="textImeMultiLine"
+                        android:singleLine="true"
+                        android:inputType="number"
                         android:text="210400693" />
                     <View
                         android:id="@+id/lineBottomSkuProductV"
@@ -86,11 +86,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_10"
-                    android:background="@drawable/bg_white_round_radius_0dp">
+                    android:background="@drawable/bg_gray_border_nostroke_radius_5dp">
                     <TextView
                         android:id="@+id/colorTV"
                         style="@style/TextViewBase"
-                        android:text="--"
+                        android:text="Green"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <ImageView
@@ -104,23 +104,57 @@
                         android:layout_toRightOf="@+id/colorTV"/>
 
                 </RelativeLayout>
-                <Spinner
-                    android:id="@+id/colorSpinner"
+                <TextView
+                    android:id="@+id/savedColorTV"
+                    style="@style/TextViewBase"
+                    android:text="--"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <View
+                    android:id="@+id/anchorView"
+                    android:layout_width="@dimen/dp_120"
                     android:visibility="invisible"
-                    android:layout_height="1dp"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:layout_below="@+id/colorTV"/>
+                    android:layout_height="1dp" />
             </LinearLayout>
-            <ImageView
-                android:id="@+id/actionEditProductIV"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="5dp"
-                android:padding="4dp"
-                android:src="@drawable/ic_edit_content"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:id="@+id/showWarningActionLL"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:orientation="vertical"
+                    android:layout_centerHorizontal="true">
+                    <ImageView
+                        android:layout_width="@dimen/dp_30"
+                        android:layout_height="@dimen/dp_24"
+                        android:paddingTop="@dimen/dp_6"
+                        android:paddingStart="@dimen/dp_6"
+                        android:src="@drawable/ic_warning_24dp_red"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:textColor="@color/red"
+                        android:text="@string/detail_warning"
+                        android:textSize="@dimen/sp_8"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/actionEditProductIV"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="5dp"
+                    android:paddingTop="@dimen/dp_6"
+                    android:paddingBottom="@dimen/dp_6"
+                    android:paddingStart="@dimen/dp_6"
+                    android:src="@drawable/ic_edit_content"/>
+            </RelativeLayout>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

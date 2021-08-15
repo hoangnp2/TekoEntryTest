@@ -7,28 +7,33 @@
         <import type="android.view.View" />
         <variable
             name="adapter"
-            type="com.example.tekotest2.screens.templatescreen.adapter.ProductAdapter" />
+            type="com.example.tekotest2.fragments.listproduct.adapter.ProductAdapter" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dp_10"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_while_round_boder_radius_5dp"
+        android:paddingTop="@dimen/dp_20"
+        android:paddingBottom="@dimen/dp_20">
         <TextView
             android:id="@+id/titleTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp_20"
-            android:text="Submit Channges"
+            android:text="@string/submit_changes_rs"
             android:textColor="@color/black"
+            android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/dp_30"
             app:layout_constraintStart_toStartOf="parent" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listProduct"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
             tools:adapter="@{adapter}"
+            app:layout_constraintVertical_bias="0"
             app:layout_constraintTop_toBottomOf="@+id/titleTV"
             app:layout_constraintBottom_toTopOf="@+id/actionConfirm"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,11 +42,12 @@
             android:id="@+id/actionConfirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="OK"
+            android:text="@string/confirm_rs"
+            android:layout_marginEnd="@dimen/dp_30"
             android:textColor="@color/purple_700"
+            android:textSize="@dimen/sp_18"
             android:layout_marginTop="@dimen/dp_10"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/listProduct"/>
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

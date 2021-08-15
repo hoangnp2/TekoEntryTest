@@ -34,7 +34,6 @@ class NetworkHelper constructor(private val context: Context) {
                 }
             }
         }
-
         return result
     }
 }

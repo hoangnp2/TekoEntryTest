@@ -1,4 +1,4 @@
-package com.example.tekotest2.screens.base
+package com.example.tekotest2.fragments.base
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -16,6 +16,8 @@ abstract class BaseDialogFragment<V : ViewDataBinding> : DialogFragment() {
     protected lateinit var binding: V
     protected open val idLayout : Int = 0
     private var isSetupViewCompleted: Boolean = false
+    private var manager: WindowManager? = null
+    private var metrics: DisplayMetrics? = null
     protected abstract fun setWidth(): Float
     protected abstract fun setHeight(): Float
     override fun onStart() {
@@ -29,7 +31,7 @@ abstract class BaseDialogFragment<V : ViewDataBinding> : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         this.dialog?.window?.let {
-            it.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+            it.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
             it.requestFeature(Window.FEATURE_NO_TITLE)
             it.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             it.attributes.windowAnimations = R.style.noAnimTheme
@@ -37,7 +39,9 @@ abstract class BaseDialogFragment<V : ViewDataBinding> : DialogFragment() {
 
         binding = DataBindingUtil.inflate(inflater, idLayout, container, false)
         binding.lifecycleOwner = this
+        metrics = DisplayMetrics()
 
+        manager = activity?.windowManager
         return binding.root
     }
     override fun onViewCreated(
@@ -48,6 +52,35 @@ abstract class BaseDialogFragment<V : ViewDataBinding> : DialogFragment() {
         initLayout()
 
     }
+
+    override fun onResume() {
+        super.onResume()
+        val window = dialog?.window
+        manager?.let {
+            if (metrics != null) {
+                it.defaultDisplay.getMetrics(metrics)
+                val with: Float
+                val height: Float
+                if (setWidth() > 0 && setWidth() < 1 && setHeight() > 0 && setHeight() < 1) {
+                    with = metrics!!.widthPixels * setWidth()
+                    height = metrics!!.heightPixels * setHeight()
+                    window?.setLayout(with.toInt(), height.toInt())
+                } else if (setHeight() == 1f && setWidth() == 1f) {
+                    window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+                } else if (setWidth() > 0 && setWidth() < 1) {
+                    with = metrics!!.widthPixels * setWidth()
+                    window?.setLayout(with.toInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
+                } else if (setHeight() > 0 && setHeight() < 1) {
+                    height = metrics!!.heightPixels * setHeight()
+                    window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, height.toInt())
+                } else {
+                    window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                }
+                window?.setGravity(Gravity.CENTER)
+            }
+        }
+    }
+
     protected open fun initLayout(){
 
     }

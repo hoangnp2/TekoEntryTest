@@ -1,4 +1,4 @@
-package com.example.tekotest2.screens.base
+package com.example.tekotest2.fragments.base
 
 import android.os.Bundle
 import android.view.LayoutInflater

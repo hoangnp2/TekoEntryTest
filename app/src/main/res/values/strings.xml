@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">TekoTest2</string>
+    <string name="confirm_rs">OK</string>
+    <string name="submit_changes_rs">Submit Changes</string>
+    <string name="name_empty_warning">Tên sản phẩm trống</string>
+    <string name="sku_empty_warning">Sku không được phép trống</string>
+    <string name="name_too_long_warning">Tên sản phẩm không quá 50 ký tự</string>
+    <string name="sku_too_long_warning">Sku không quá 20 ký tự</string>
+    <string name="invalid">sản phẩm thoả mãn</string>
+    <string name="dialog_title">Thông báo</string>
+    <string name="general_warning">Vui lòng kiểm tra lại các sản phẩm được đánh dấu</string>
+    <string name="has_no_change">Không có sản phẩm nào thay đổi</string>
+    <string name="detail_warning">Chi tiết</string>
+    <string name="no_color">--</string>
 </resources>

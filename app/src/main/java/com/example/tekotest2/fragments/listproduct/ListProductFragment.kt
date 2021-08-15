@@ -1,44 +1,55 @@
-package com.example.tekotest2.screens.templatescreen
+package com.example.tekotest2.fragments.listproduct
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.ArrayAdapter
 import android.widget.ListPopupWindow
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tekotest2.R
 import com.example.tekotest2.databinding.TemplateLayoutBinding
 import com.example.tekotest2.model.Product
-import com.example.tekotest2.screens.base.BaseFragment
-import com.example.tekotest2.screens.templatescreen.adapter.OptionColorAdapter
-import com.example.tekotest2.screens.templatescreen.adapter.ProductAdapter
+import com.example.tekotest2.fragments.base.BaseFragment
+import com.example.tekotest2.fragments.confirmdialog.ConfirmDialog
+import com.example.tekotest2.fragments.listproduct.adapter.ProductAdapter
+import com.example.tekotest2.utils.DialogFactory
 import com.example.tekotest2.utils.KeyboardUtils
 import com.example.tekotest2.utils.Status
 import com.example.tekotest2.viewmodel.TemplateViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
-import kotlin.concurrent.fixedRateTimer
 
-class TemplateFragment : BaseFragment<TemplateLayoutBinding>() {
+class ListProductFragment : BaseFragment<TemplateLayoutBinding>() {
     override val idLayout = R.layout.template_layout
     private val viewModel: TemplateViewModel by viewModel()
     private val adapter: ProductAdapter by lazy { ProductAdapter() }
     private var countPage = 1
-
+    var builder :AlertDialog.Builder? = null
     private val listPopupWindow: ListPopupWindow? = null
     override fun initLayout() {
         setupViews()
         viewModel.requestDataProductLiveData.observe(viewLifecycleOwner, { it ->
             when (it.status) {
+                Status.LOADING ->{
+                    binding.loadingView.visibility = View.VISIBLE
+                }
                 Status.SUCCESS -> {
+                    binding.loadingView.visibility = View.GONE
                     val arr: ArrayList<Product> = ArrayList()
                     it.data?.let { arr.addAll(it) }
                     adapter.updateListProduct(arr)
+                }
+                Status.ERROR ->{
+                    binding.loadingView.visibility = View.GONE
+                    it.message?.let {
+                        showAlertDialog(it)
+                    }
                 }
                 else -> {
                 }
@@ -76,6 +87,7 @@ class TemplateFragment : BaseFragment<TemplateLayoutBinding>() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setupViews() {
+        builder = AlertDialog.Builder(activity)
         KeyboardUtils.addKeyboardVisibilityListener(binding.root,object : KeyboardUtils.OnKeyboardVisibiltyListener{
             override fun onVisibilityChange(isVisible: Boolean) {
                 isVisibleKeyboard = isVisible
@@ -141,14 +153,50 @@ class TemplateFragment : BaseFragment<TemplateLayoutBinding>() {
                 }
             }
 
-            override fun onSelectItem() {
-                activity?.supportFragmentManager?.popBackStack()
+
+            override fun onShowAlertDialog(content: String) {
+                showAlertDialog(content)
+            }
+        }
+
+        binding.buttonSubmit.setOnClickListener { kotlin.run {
+            showPopupConfirm()
+        } }
+    }
+
+    private fun showPopupConfirm() {
+        val listProductChanged : ArrayList<Product> = ArrayList()
+        for(product in viewModel.listProductData){
+            if(product.isChangeData && !product.isEditing){
+                if(product.validateProduct() != Product.STATUS.INVALID){
+                    this.context?.resources?.getString(R.string.general_warning)?.let {
+                        showAlertDialog(it)
+                    }
+                    adapter.notifyItemRangeChanged(
+                        0,
+                        adapter.itemCount - 1,
+                        ProductAdapter.UPDATE_ERROR
+                    )
+                    return
+                }
+                listProductChanged.add(product)
+            }
+        }
+        if(listProductChanged.isNotEmpty()){
+            val confirmDialog = ConfirmDialog.newInstance(listProductChanged)
+            DialogFactory.showDialogFragment(activity,confirmDialog)
+        }else{
+            this.context?.resources?.getString(R.string.has_no_change)?.let {
+                showAlertDialog(it)
             }
         }
     }
 
-    fun setUpPopupWindown(){
-
+    fun showAlertDialog(content: String) {
+        builder?.setMessage(content)?.setTitle(R.string.dialog_title)?.setCancelable(false)?.setPositiveButton("OK",
+                DialogInterface.OnClickListener { dialog, _ -> dialog?.cancel() })
+        val alert = builder?.create()
+        alert?.show()
     }
 
 

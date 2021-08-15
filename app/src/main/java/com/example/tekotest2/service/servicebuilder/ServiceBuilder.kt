@@ -14,14 +14,14 @@ class ServiceBuilder {
         fun provideNetworkHelper(context: Context) = NetworkHelper(context)
 
         fun provideOkHttpClient(): OkHttpClient {
-            if (BuildConfig.DEBUG) {
+            return if (BuildConfig.DEBUG) {
                 val loggingInterceptor = HttpLoggingInterceptor()
                 loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-                return OkHttpClient.Builder()
+                OkHttpClient.Builder()
                     .addInterceptor(loggingInterceptor)
                     .build()
             } else {
-                return OkHttpClient.Builder().build()
+                OkHttpClient.Builder().build()
             }
         }
 
