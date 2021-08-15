@@ -179,16 +179,23 @@ class ProductAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
         }
 
         fun bindError(product :Product){
-            if(product.validateProduct() != Product.STATUS.INVALID){
-               binding. showWarningActionLL.visibility = View.VISIBLE
-                binding. showWarningActionLL.visibility = View.VISIBLE
-                binding. showWarningActionLL.setOnClickListener {
+            if(product.validateProduct() != Product.STATUS.INVALID ){
+                if (!product.isEditing) {
+                    binding.showWarningActionLL.visibility = View.VISIBLE
+                } else {
+                    binding.showWarningActionLL.visibility = View.GONE
+                }
+                binding.showWarningActionLL.setOnClickListener {
                     run {
-                        onActionsListener?.onShowAlertDialog(binding.root.context.resources.getString(product.validateProduct().idRsContent))
+                        onActionsListener?.onShowAlertDialog(
+                            binding.root.context.resources.getString(
+                                product.validateProduct().idRsContent
+                            )
+                        )
                     }
                 }
-            }else{
-                binding. showWarningActionLL.visibility = View.GONE
+            } else {
+                binding.showWarningActionLL.visibility = View.GONE
             }
         }
 

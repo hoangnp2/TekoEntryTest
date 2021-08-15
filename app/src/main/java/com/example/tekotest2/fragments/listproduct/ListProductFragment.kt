@@ -3,14 +3,11 @@ package com.example.tekotest2.fragments.listproduct
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
-import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.ListPopupWindow
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tekotest2.R
@@ -31,7 +28,6 @@ class ListProductFragment : BaseFragment<TemplateLayoutBinding>() {
     private val adapter: ProductAdapter by lazy { ProductAdapter() }
     private var countPage = 1
     var builder :AlertDialog.Builder? = null
-    private val listPopupWindow: ListPopupWindow? = null
     override fun initLayout() {
         setupViews()
         viewModel.requestDataProductLiveData.observe(viewLifecycleOwner, { it ->
@@ -51,8 +47,6 @@ class ListProductFragment : BaseFragment<TemplateLayoutBinding>() {
                         showAlertDialog(it)
                     }
                 }
-                else -> {
-                }
             }
         })
         viewModel.colorLiveData.observe(viewLifecycleOwner, {
@@ -64,6 +58,12 @@ class ListProductFragment : BaseFragment<TemplateLayoutBinding>() {
                             adapter.itemCount - 1,
                             ProductAdapter.UPDATE_COLOR
                         )
+                    }
+                }
+                Status.ERROR ->{
+                    binding.loadingView.visibility = View.GONE
+                    it.message?.let { msg ->
+                        showAlertDialog(msg)
                     }
                 }
                 else -> {
@@ -112,22 +112,20 @@ class ListProductFragment : BaseFragment<TemplateLayoutBinding>() {
                 }
             }
         })
-        binding.recycle.setOnTouchListener (object : View.OnTouchListener{
-            override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
-                if (enableTouchRcv && isVisibleKeyboard) {
-                    hideKeyboard()
-                    if (Build.VERSION.SDK_INT >= 28) {
-                        try {
-                            activity?.currentFocus?.clearFocus()
-                        } catch (ignored: Exception) {
-                        }
+        binding.recycle.setOnTouchListener { _, _ ->
+            if (enableTouchRcv && isVisibleKeyboard) {
+                hideKeyboard()
+                if (Build.VERSION.SDK_INT >= 28) {
+                    try {
+                        activity?.currentFocus?.clearFocus()
+                    } catch (ignored: Exception) {
                     }
-                    enableTouchRcv = false
-                    Handler(Looper.getMainLooper()).postDelayed({ enableTouchRcv = true }, 300)
                 }
-                return false
+                enableTouchRcv = false
+                Handler(Looper.getMainLooper()).postDelayed({ enableTouchRcv = true }, 300)
             }
-        })
+            false
+        }
         binding.adapter = adapter
         adapter.onActionsListener = object : ProductAdapter.OnActionsListener {
             override fun onClickEditAction(product: Product) {
@@ -193,17 +191,16 @@ class ListProductFragment : BaseFragment<TemplateLayoutBinding>() {
     }
 
     fun showAlertDialog(content: String) {
-        builder?.setMessage(content)?.setTitle(R.string.dialog_title)?.setCancelable(false)?.setPositiveButton("OK",
-                DialogInterface.OnClickListener { dialog, _ -> dialog?.cancel() })
+        builder?.setMessage(content)?.setTitle(R.string.dialog_title)?.setCancelable(false)?.setPositiveButton("OK") { dialog, _ -> dialog?.cancel() }
         val alert = builder?.create()
         alert?.show()
     }
 
 
 
-    var enableTouchRcv = true
+    private var enableTouchRcv = true
     var isVisibleKeyboard = false
-    fun hideKeyboard() {
+    private fun hideKeyboard() {
         if (isVisibleKeyboard) {
             val imm =
                 requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

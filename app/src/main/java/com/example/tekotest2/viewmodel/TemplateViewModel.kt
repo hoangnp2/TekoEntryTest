@@ -107,7 +107,7 @@ class TemplateViewModel(
                         colorLiveData.postValue(Resource.success(null))
                     }
                 }
-            } else requestDataProductLiveData.postValue(Resource.error("No internet connection", null))
+            } else colorLiveData.postValue(Resource.error("No internet connection", null))
         }
     }
 
