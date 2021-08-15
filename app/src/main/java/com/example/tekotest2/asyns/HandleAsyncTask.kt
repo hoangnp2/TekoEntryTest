@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.flow
 
 class HandleAsyncTask<T> {
     companion object {
-        public const val RUN_ON_IO: Int = 1
-        public const val RUN_ON_UI: Int = 2
-        public const val RUN_ON_WORKER: Int = 3
+        const val RUN_ON_IO: Int = 1
+        const val RUN_ON_UI: Int = 2
+        const val RUN_ON_WORKER: Int = 3
     }
 
      var mContext: Context? = null
@@ -25,7 +25,7 @@ class HandleAsyncTask<T> {
     set(value) {
         field = value
     }
-    private val job = kotlinx.coroutines.Job()
+    private val job = Job()
     private val mScope = CoroutineScope(when (mType) {
         RUN_ON_IO -> Dispatchers.IO + job
         RUN_ON_WORKER -> Dispatchers.Default + job

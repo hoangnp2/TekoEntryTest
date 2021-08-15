@@ -32,15 +32,11 @@ android {
         jvmTarget = '1.8'
     }
     productFlavors {
-        develop {
-            applicationId "com.example.tekotest2.dev"
-            flavorDimensions "develop"
-            buildConfigField("String", "BASE_URL", "\"https://5e510330f2c0d300147c034c.mockapi.io\"")
-        }
+
         production {
             applicationId "com.example.tekotest2"
             flavorDimensions "production"
-            buildConfigField("String", "BASE_URL", "\"https://5e510330f2c0d300147c034c.mockapi.io\"")
+            buildConfigField("String", "BASE_URL", "\"https://hiring-test.stag.tekoapis.net\"")
         }
     }
 }

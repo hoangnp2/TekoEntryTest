@@ -12,8 +12,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startFragment() {
-        var fragmentManager = supportFragmentManager
-        var ft = fragmentManager.beginTransaction()
+        val fragmentManager = supportFragmentManager
+        val ft = fragmentManager.beginTransaction()
         ft.add(R.id.main_id,TemplateFragment())
         ft.commit()
     }

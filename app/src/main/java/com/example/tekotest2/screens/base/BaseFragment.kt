@@ -13,10 +13,6 @@ abstract class BaseFragment<V : ViewDataBinding> : Fragment(){
     protected lateinit var binding: V
     protected open val idLayout : Int = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

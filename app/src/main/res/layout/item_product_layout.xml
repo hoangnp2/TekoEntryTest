@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/dp_6"
+        app:cardElevation="@dimen/dp_3"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/imageProductIV"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/avatar"
+                android:layout_gravity="center"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="@dimen/dp_10">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <EditText
+                        android:id="@+id/productNameEdt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        style="@style/EditTextViewBase"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:imeOptions="actionDone"
+                        android:inputType="textImeMultiLine"
+                        android:text="Laptop Dell Inspiron 13 5301" />
+
+                    <View
+                        android:id="@+id/lineBottomNameProductV"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/colorGray" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <EditText
+                        android:id="@+id/skuEdt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:background="@color/white"
+                        style="@style/EditTextViewBase"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:imeOptions="actionDone"
+                        android:inputType="textImeMultiLine"
+                        android:text="210400693" />
+                    <View
+                        android:id="@+id/lineBottomSkuProductV"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/colorGray" />
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/productErrorTV"
+                    style="@style/TextViewBase"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="Product error 101" />
+
+                <RelativeLayout
+                    android:id="@+id/borderColorRL"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@drawable/bg_white_round_radius_0dp">
+                    <TextView
+                        android:id="@+id/colorTV"
+                        style="@style/TextViewBase"
+                        android:text="--"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <ImageView
+                        android:id="@+id/imageColorExpandIV"
+                        android:layout_width="@dimen/dp_10"
+                        android:layout_height="@dimen/dp_10"
+                        android:src="@drawable/ic_arrow_bold_24dp"
+                        android:layout_centerVertical="true"
+                        android:visibility="gone"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_toRightOf="@+id/colorTV"/>
+
+                </RelativeLayout>
+                <Spinner
+                    android:id="@+id/colorSpinner"
+                    android:layout_width="wrap_content"
+                    android:visibility="invisible"
+                    android:layout_height="1dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:layout_below="@+id/colorTV"/>
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/actionEditProductIV"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:padding="4dp"
+                android:src="@drawable/ic_edit_content"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

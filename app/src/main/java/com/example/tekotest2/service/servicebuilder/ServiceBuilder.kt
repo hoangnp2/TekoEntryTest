@@ -2,7 +2,7 @@ package com.example.tekotest2.service.servicebuilder
 
 import android.content.Context
 import com.example.tekotest2.BuildConfig
-import com.example.tekotest2.service.api.tekoapi.TekoApiService
+import com.example.tekotest2.service.api.tekoapi.ProductApiService
 import com.example.tekotest2.utils.NetworkHelper
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -33,8 +33,8 @@ class ServiceBuilder {
                 .build()
         }
 
-        fun getTekoApiService(retrofit: Retrofit): TekoApiService {
-            return retrofit.create(TekoApiService::class.java)
+        fun getProductsApiService(retrofit: Retrofit): ProductApiService {
+            return retrofit.create(ProductApiService::class.java)
         }
     }
 
