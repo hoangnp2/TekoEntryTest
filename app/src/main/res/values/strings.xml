@@ -12,4 +12,5 @@
     <string name="has_no_change">Không có sản phẩm nào thay đổi</string>
     <string name="detail_warning">Chi tiết</string>
     <string name="no_color">--</string>
+    <string name="no_internet_connection">Không có kết nối mạng</string>
 </resources>

@@ -3,6 +3,8 @@ package com.example.tekotest2.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tekotest2.R
+import com.example.tekotest2.application.App
 import com.example.tekotest2.model.Color
 import com.example.tekotest2.model.Product
 import com.example.tekotest2.service.repository.ProductRepositoryImpl
@@ -23,6 +25,11 @@ class TemplateViewModel(
     val cacheInitialProductData : HashMap<String,Product> = HashMap()
     var enableGetMore = true
     var isAddingProduct = false
+
+    companion object {
+        const val PAGE_LIMIT = 10
+    }
+
     fun initData() {
         getColorsData()
         getProduct(1)
@@ -52,7 +59,7 @@ class TemplateViewModel(
                         }
                     } else requestDataProductLiveData.postValue(Resource.error(it.errorBody().toString(), null))
                 }
-            } else requestDataProductLiveData.postValue(Resource.error("No internet connection", null))
+            } else requestDataProductLiveData.postValue(Resource.error("Không có kết nối mạng", null))
         }
     }
 
@@ -113,7 +120,7 @@ class TemplateViewModel(
                         colorLiveData.postValue(Resource.success(null))
                     }
                 }
-            } else colorLiveData.postValue(Resource.error("No internet connection", null))
+            } else colorLiveData.postValue(Resource.error("Không có kết nối mạng", null))
         }
     }
 
@@ -134,7 +141,5 @@ class TemplateViewModel(
     fun removeCacheProduct(id : String){
         cacheInitialProductData.remove(id)
     }
-    companion object {
-        const val PAGE_LIMIT = 10
-    }
+
 }

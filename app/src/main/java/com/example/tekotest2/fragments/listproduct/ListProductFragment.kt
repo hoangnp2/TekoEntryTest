@@ -27,7 +27,7 @@ class ListProductFragment : BaseFragment<TemplateLayoutBinding>() {
     private val viewModel: TemplateViewModel by viewModel()
     private val adapter: ProductAdapter by lazy { ProductAdapter() }
     private var countPage = 1
-    var builder :AlertDialog.Builder? = null
+    private var builder :AlertDialog.Builder? = null
     override fun initLayout() {
         setupViews()
         viewModel.requestDataProductLiveData.observe(viewLifecycleOwner, { it ->
@@ -112,6 +112,7 @@ class ListProductFragment : BaseFragment<TemplateLayoutBinding>() {
                 }
             }
         })
+        //Ẩn bàn phím khi chạm hoặc scroll danh sách sản phẩm
         binding.recycle.setOnTouchListener { _, _ ->
             if (enableTouchRcv && isVisibleKeyboard) {
                 hideKeyboard()
@@ -129,6 +130,7 @@ class ListProductFragment : BaseFragment<TemplateLayoutBinding>() {
         binding.adapter = adapter
         adapter.onActionsListener = object : ProductAdapter.OnActionsListener {
             override fun onClickEditAction(product: Product) {
+                //Lưu lại dữ liệu ban đầu của sản phẩm khi bắt đầu sửa
                 if (!product.isChangeData) {
                     viewModel.cacheProduct(product)
                 }
@@ -138,6 +140,7 @@ class ListProductFragment : BaseFragment<TemplateLayoutBinding>() {
                     if(viewModel.cacheInitialProductData.containsKey(productId)){
                         val cacheProduct = viewModel.cacheInitialProductData[productId]
                         cacheProduct?.let {
+                            //Xoá sản phẩm khỏi danh sách cache nếu dữ liệu không đổi so với ban đầu
                             if(product.isSame(cacheProduct)){
                                 product.isChangeData = false
                                 viewModel.removeCacheProduct(productId)

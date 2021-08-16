@@ -11,7 +11,7 @@ import com.example.tekotest2.R
 import com.example.tekotest2.databinding.ItemOptionColorLayoutBinding
 import com.example.tekotest2.model.Color
 
-class OptionColorAdapter(var context: Context, var listValueCondition: List<Color>) : BaseAdapter() {
+class OptionColorAdapter(var context: Context, private var listValueCondition: List<Color>) : BaseAdapter() {
     var mOnSelectOptionListener: OnSelectOptionListener? = null
 
     @SuppressLint("ViewHolder")
